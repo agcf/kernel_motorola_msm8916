@@ -2342,10 +2342,9 @@ struct sk_buff *__skb_gso_segment(struct sk_buff *skb,
 	if (unlikely(skb_needs_check(skb, tx_path))) {
 		int err;
 
-		skb_warn_bad_offload(skb);
-
-		if (skb_header_cloned(skb) &&
-		    (err = pskb_expand_head(skb, 0, 0, GFP_ATOMIC)))
+		/* We're going to init ->check field in TCP or UDP header */
+		err = skb_cow_head(skb, 0);
+		if (err < 0)
 			return ERR_PTR(err);
 	}
 
