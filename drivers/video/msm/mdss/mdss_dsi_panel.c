@@ -26,6 +26,7 @@
 #include <linux/jiffies.h>
 #include <linux/ktime.h>
 
+#include <linux/display_state.h>
 #include "mdss_dsi.h"
 #include "mdss_fb.h"
 #include "mdss_dropbox.h"
@@ -90,6 +91,13 @@ static void mdss_dsi_panel_bl_on_defer_wait(struct mdss_dsi_ctrl_pdata *ctrl)
 		wait_for_completion_timeout(&bl_on_delay_completion,
 			msecs_to_jiffies(pinfo->bl_on_defer_delay) + 1);
 	}
+}
+
+bool display_on = true;
+
+bool is_display_on()
+{
+	return display_on;
 }
 
 void mdss_dsi_panel_pwm_cfg(struct mdss_dsi_ctrl_pdata *ctrl)
@@ -886,6 +894,8 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
        set_power_suspend_state_panel_hook(POWER_SUSPEND_INACTIVE);
 #endif
 
+	display_on = true;
+
 	pinfo = &pdata->panel_info;
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
@@ -1026,6 +1036,8 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 #ifdef CONFIG_POWERSUSPEND
        set_power_suspend_state_panel_hook(POWER_SUSPEND_ACTIVE);
 #endif
+
+	display_on = false;
 
 end:
 	pinfo->blank_state = MDSS_PANEL_BLANK_BLANK;
