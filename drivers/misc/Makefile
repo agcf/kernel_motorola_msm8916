@@ -79,3 +79,4 @@ obj-$(CONFIG_SENSORS_STML0XX) += stml0xx/
 obj-$(CONFIG_SENSORS_AK09912) += akm09912.o
 obj-$(CONFIG_HAPTIC_DRV2605)	+= drv2605.o
 
+obj-$(CONFIG_FORCE_FAST_CHARGE) += fastchg.o
