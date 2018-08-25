@@ -250,6 +250,15 @@ struct binder_node_debug_info {
 	__u32            has_weak_ref;
 };
 
+struct binder_node_info_for_ref {
+	__u32            handle;
+	__u32            strong_count;
+	__u32            weak_count;
+	__u32            reserved1;
+	__u32            reserved2;
+	__u32            reserved3;
+};
+
 #define BINDER_WRITE_READ		_IOWR('b', 1, struct binder_write_read)
 #define	BINDER_SET_IDLE_TIMEOUT		_IOW('b', 3, __s64)
 #define	BINDER_SET_MAX_THREADS		_IOW('b', 5, __u32)
@@ -260,6 +269,7 @@ struct binder_node_debug_info {
 #define BINDER_GET_PEER_PID            _IOWR('b', 10, struct binder_get_peer)
 #define BINDER_SET_INHERIT_FIFO_PRIO	_IO('b', 10)
 #define BINDER_GET_NODE_DEBUG_INFO	_IOWR('b', 11, struct binder_node_debug_info)
+#define BINDER_GET_NODE_INFO_FOR_REF	_IOWR('b', 12, struct binder_node_info_for_ref)
 
 /*
  * NOTE: Two special error codes you should check for when calling
