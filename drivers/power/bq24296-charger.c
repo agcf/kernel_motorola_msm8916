@@ -2882,12 +2882,14 @@ static int bq24296_charger_probe(struct i2c_client *client,
 	dev_dbg(&client->dev, "BQ24296 batt=%d usb=%d done=%d\n",
 			chip->batt_present, chip->usb_present,
 			chip->chg_done_batt_full);
+			mutex_unlock(&chip->read_write_lock);
 
 	return 0;
 
 unregister_batt_psy:
 	dev_err(&client->dev, "err\n");
 	power_supply_unregister(&chip->batt_psy);
+	mutex_unlock(&chip->read_write_lock);
 	bq24296_regulator_deinit(chip);
 	wakeup_source_trash(&chip->bq_wake_source.source);
 	wakeup_source_trash(&chip->bq_wake_source_charger.source);
