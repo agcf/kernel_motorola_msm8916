@@ -586,6 +586,9 @@ endif
 # Needed to unbreak GCC 7.x and above
 KBUILD_CFLAGS   += $(call cc-option,-fno-store-merging,)
 
+# Align memory adresses
+KBUILD_CFLAGS	+= $(call cc-option,-mstrict-align,)
+
 # Drop attributes conflict warning for now
 KBUILD_CFLAGS   += $(call cc-option,-Wno-attributes,)
 
