@@ -589,6 +589,9 @@ KBUILD_CFLAGS   += $(call cc-option,-fno-store-merging,)
 # Drop attributes conflict warning for now
 KBUILD_CFLAGS   += $(call cc-option,-Wno-attributes,)
 
+# Drop unaligned pointer warning for now
+KBUILD_CFLAGS   += $(call cc-option,-Wno-address-of-packed-member,)
+
 include $(srctree)/arch/$(SRCARCH)/Makefile
 
 ifdef CONFIG_READABLE_ASM
